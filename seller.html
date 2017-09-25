@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<button> Sell </button>
+</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$("button").on('click', () => {
+			$.post( "http://localhost:3000", { 
+			    'uuid'           : 'uuid1',
+			    'seller_amount'   : 5,
+			    'seller_address' : '0xsSsSs',
+			});
+		})
+	</script>
+</html>
