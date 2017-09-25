@@ -2,4 +2,4 @@
 - open buyer.html
 - open seller.html
 - `node server.js`
-- read the logs
+- the logs describe the logic of the contract

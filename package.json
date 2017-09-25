@@ -1,0 +1,29 @@
+{
+  "name": "ETH-commerce",
+  "version": "1.0.0",
+  "description": "- open buyer.html - open seller.html - `node server.js` - the logs describe the logic of the contract",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leon-do/ETH-commerce.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leon-do/ETH-commerce/issues"
+  },
+  "homepage": "https://github.com/leon-do/ETH-commerce#readme"
+}
