@@ -26,23 +26,23 @@ var transation = {
 
 
 app.post('/', function (req, res){
-	console.log('\n\n\n =================')
+	console.log('\n =================')
 	console.log('\n Message Recieved...')
     const message = req.body
     console.log('\n The message is: \n', message)
 
-    if (message.represent === 'seller'){
-    	console.log('\n The message is from the seller...')
+    if (contract[message.uuid] === undefined && message.represent === 'seller'){
+    	console.log('\n The message is new & the message is from the seller...')
     	console.log('\n going to seller logic...')
     	seller(message)
     }
-    else if (message.represent === 'buyer' && message.command === 'I_agree_to_the_contract' && contract[message.uuid] !== undefined){
-    	console.log('\n The message is from the buyer & he/she agrees to the contract & the contract exists...')
+    else if (contract[message.uuid] !== undefined && message.represent === 'buyer' && message.command === 'I_agree_to_the_contract'){
+    	console.log('\n The contract exists & the message is from the buyer & he/she agrees to the contract...')
     	console.log('\n going to contract_agreement() logic...')
     	contract_agreement(message)
     }
-    else if (message.represent === 'buyer' && message.command === 'complete_transaction' && contract[message.uuid] !== undefined){
-    	console.log('\n The message from the buyer & he/she says `complete the transaction` & the contract is agreed upon...')
+    else if (contract[message.uuid] !== undefined && message.represent === 'buyer' && message.command === 'complete_transaction'){
+    	console.log('\n The contract exists & the message is from the buyer & he/she says `complete the transaction`...')
     	console.log('\n going to complete_transaction() logic...')
     	complete_transaction(message)
     }
@@ -58,8 +58,9 @@ app.post('/', function (req, res){
 function contract_agreement(message){
 	console.log('\n Starting the contract agreement logic:')
 
-	if (message.buyer_amount >= 2 * contract[message.uuid].seller_amount && contract[message.uuid].buyer_amount === undefined){
-		console.log('\n The buyer amount is greater than the seller amount + seller collateral (2 * seller amount) & the item has not been bought...')
+	if (contract[message.uuid].buyer_amount === undefined && message.buyer_amount >= 2 * contract[message.uuid].seller_amount){
+		console.log('\n The item has not been bought & the buyer agrees to pay the seller_amount + collateral...')
+        
         console.log('\n ...adding buyer information to the contract')
 		contract[message.uuid].buyer_address = message.buyer_address
 		contract[message.uuid].buyer_amount = message.buyer_amount
@@ -95,6 +96,7 @@ function complete_transaction(message){
         console.log('\n The contract = ', contract[message.uuid])
     	console.log('\n Seller gets paid: ', seller_pay)
     	console.log('\n Buyer gets paid: ', buyer_pay)
+
     } else {
 
         console.log("\n The contact hasn't been agreed upon.")
@@ -109,21 +111,21 @@ function complete_transaction(message){
 function seller(message){
 	console.log('\n Starting seller logic:')
 
-	if (contract[message.uuid] === undefined && message.seller_amount > 0){
-		console.log('\n The seller information is not listed in the contract & the seller listed an item > 0...')
+	if (message.seller_amount > 0){
+		console.log('\n The seller listed an item worth > 0 ...')
 
-	    console.log('\n ...adding seller address to the contract.')
-	    console.log(`\n ...holding seller amount as collateral.`)
+	    console.log('\n ...adding seller_address to the contract.')
+	    console.log(`\n ...holding seller_amount as collateral.`)
 	    contract[message.uuid] = {
+            'seller_address': message.seller_address,
 	        'seller_amount' : message.seller_amount, 
-	        'seller_address': message.seller_address,
     	}  
     	
     	console.log('\n The contract is: ', contract[message.uuid])
     	console.log('\n The item is now listed on the contract. Waiting on buyer...')
 	} 
 	else {
-		console.log('\n Seller information is already listed in the contract')
+		console.log('\n The seller listed an item worth < 0')
         console.log(contract[message.uuid])
         console.log('Returning seller money.')
 		return 'seller money'
