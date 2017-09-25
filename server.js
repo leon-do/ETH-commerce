@@ -96,7 +96,7 @@ function complete_transaction(message){
     	console.log('\n pay the buyer the rest of his collateral')
     	var buyer_pay = contract[message.uuid].buyer_amount - contract[message.uuid].seller_amount
         
-        console.log('\n Your contract is: ', contract[message.uuid])
+        console.log('\n The contract is: ', contract[message.uuid])
     	console.log('\n seller gets paid ', seller_pay)
     	console.log('\n buyer gets paid ', buyer_pay)
     } else {
@@ -113,8 +113,8 @@ function complete_transaction(message){
 function seller(message){
 	console.log('\n Starting seller logic:')
 
-	if (contract[message.uuid] === undefined){
-		console.log('\n The seller information is not listed in the contract...')
+	if (contract[message.uuid] === undefined && message.seller_amount > 0){
+		console.log('\n The seller information is not listed in the contract & the seller listed an item > 0...')
 
 	    console.log('\n ...adding seller address to the contract.')
 	    console.log(`\n ...holding seller amount as collateral.`)
@@ -123,7 +123,7 @@ function seller(message){
 	        'seller_address': message.seller_address,
     	}  
     	
-    	console.log('\n Your contract is: ', contract[message.uuid])
+    	console.log('\n The contract is: ', contract[message.uuid])
     	console.log('\n The item is now listed on the contract. Waiting on buyer...')
 	} 
 	else {
