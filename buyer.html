@@ -4,17 +4,30 @@
 	<title></title>
 </head>
 <body>
-	<button> Buy </button>
+	<button id='buy'> Buy </button>
+	<br>
+	<button id='complete_transaction'> complete transaction </button>
 </body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script>
-		$("button").on('click', () => {
-			$.post( "http://localhost:3000", { 
+
+		$('#buy').on('click', () => {
+			$.post( "http://localhost:3000", {
+				'represent'		 : 'buyer', 
 			    'uuid'           : 'uuid1',
+			    'buyer_address'  : '0xbBbBb',
 			    'buyer_amount'   : 10,
-			    'seller_address' : '0xsSsSs',
-			    'buyer_address'  : '0xbBbBb'
+			    'command'		 : 'I_agree_to_the_contract',
 			});
 		})
+
+		$('#complete_transaction').on('click', () => {
+			$.post( "http://localhost:3000", { 
+				'represent'		 : 'buyer',
+			    'uuid' 			 : 'uuid1',
+			   	'command'		 : 'complete_transaction',
+			});
+		})
+
 	</script>
 </html>
