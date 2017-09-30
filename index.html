@@ -3,29 +3,33 @@
 
 <body class="container">
 
-    <br>
-    Price (ETH): <input type='number' id='sellPrice'>
-    <button onclick="sell()">sell</button>
-    <br>
-    Contract Address: <input id='cancelContractAddress'>
-    <button onclick="cancelSell()">cancel sell</button>
-    <div id='sellTransactionHash'></div>
-    <div id='sellContractAddress'></div>
-    <div id='sellValue'></div>
-    <br>
+    <div>
+        Price (ETH): <input type='number' id='sellPrice'>
+        <button onclick="sell()">sell</button>
+        <br>
+        Contract Address: <input id='cancelContractAddress'>
+        <button onclick="cancelSell()">cancel sell</button>
+        <div id='sellTransactionHash'></div>
+        <div id='sellContractAddress'></div>
+        <div id='sellValue'></div>
+    </div>
 
-    <br>
-    Contract Address: <input id='buyContractAddress'>
-    <br>
-    Amount: <input id='buyValue'>
-    <button onclick="buy()">buy</button>
-    <div id='buyTransactionHash'></div>
-    <br>
+    <br><br><br><br>
 
-    <br>
-    Contract Address: <input id='recievedContractAddress'>
-    <button onclick="itemRecieved()">Item Recieved</button>
-    <br>
+    <div>
+        Contract Address: <input id='buyContractAddress'>
+        <br>
+        Amount: <input id='buyValue'>
+        <button onclick="buy()">buy</button>
+        <div id='buyTransactionHash'></div>
+    </div>
+
+    <br><br><br><br>
+
+    <div>
+        Contract Address: <input id='recievedContractAddress'>
+        <button onclick="itemRecieved()">Item Recieved</button>
+    </div>
 
 </body>
 
@@ -37,7 +41,6 @@
 
 
 <script>
-
 
     var contractAbi = [{"constant":true,"inputs":[],"name":"seller","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"abort","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"value","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"buyer","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"confirmReceived","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"state","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"confirmPurchase","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"inputs":[],"payable":true,"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[],"name":"Aborted","type":"event"},{"anonymous":false,"inputs":[],"name":"PurchaseConfirmed","type":"event"},{"anonymous":false,"inputs":[],"name":"ItemReceived","type":"event"}]
 
@@ -61,12 +64,12 @@
                 console.log('This is the rinkeby test network.')
                 break        
             default:
-                alert('Please connect to Metamask or Mist then try again')
+                console.log('Please connect to Metamask or Mist then try again')
             }
         })
 
         // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-        if (typeof web3 !== 'undefined') {
+        if (typeof web3 !== undefined) {
             // Use Mist/MetaMask's provider
             window.web3 = new Web3(web3.currentProvider);
         } else {
@@ -75,8 +78,6 @@
 
     })
     
-
-
 
 
     function sell(){
@@ -94,7 +95,7 @@
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
                 $('#sellTransactionHash').text(`https://rinkeby.etherscan.io/tx/${contract.transactionHash}`)    
-                $('#sellContractAddress').text(`https://rinkeby.etherscan.io/address/${contract.address}`)
+                $('#sellContractAddress').text(`Contract Address: ${contract.address}`)
                 $('#sellValue').text($('#value').val())
             }
 
@@ -105,27 +106,50 @@
 
     function cancelSell() {
 
-        web3.eth.contract(contractAbi).at($('#recievedContractAddress').val()).abort.confirmReceived({}, function(err, data){
-            console.log(err, data)
-            $('#buyTransactionHash').val(JSON.stringify(data))
-        })
+        // if the seller clicks abort, then return funds to seller
+        web3.eth.contract(contractAbi).abort('', 
+            {
+                from: web3.eth.accounts[0],
+                to: $("#cancelContractAddress").val()
+            }, function(err, data) {
+                console.log(e, data)
+
+            }
+        )        
 
     }
-
 
     function buy() {
 
+        // if the value sold = value bought, then this locks in the contract
+        web3.eth.contract(contractAbi).confirmPurchase('', 
+            {
+                from: web3.eth.accounts[0],
+                value: $('#buyValue').val() * 1000000000000000000, // convert ETH to wei
+                to: $("#buyContractAddress").val()
+            }, function(err, data) {
+                console.log(e, data)
 
+            }
+        )
 
     }
+
 
 
     function itemRecieved() {
 
-        // if the buyer clicked 'item recieved', then send msg to contract to release funds
-        web3.eth.contract(contractAbi).at($('#cancelContractAddress').val()).abort.sendTransaction({}, function(err, data){
-            console.log(err, data)
-        })
+
+        if the buyer clicked 'item recieved', then send msg to contract to release funds
+        web3.eth.contract(contractAbi).confirmReceived('', 
+            {
+                from: web3.eth.accounts[0],
+                to: $("#recievedContractAddress").val()
+            }, function(err, data) {
+                console.log(e, data)
+                
+            }
+        )
 
     }
 
