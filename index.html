@@ -82,21 +82,17 @@
 
     function sell(){
 
+        var value = $('#sellPrice').val()
+
         // if seller click sell, then deploy contract
         web3.eth.contract(contractAbi).new(
         {
             from: web3.eth.accounts[0], 
             data: contractByteCode, 
             gas: '4700000',
-            value: $('#sellPrice').val() * 1000000000000000000
+            value: value * 1000000000000000000
         }, function (e, contract){
             console.log(e, contract);
-            
-            if (typeof contract.address !== 'undefined') {
-                // display info on screen
-                $('#sellTransactionHash').text(`https://rinkeby.etherscan.io/tx/${contract.transactionHash}`)    
-                $('#sellContractAddress').text(`Contract Address: ${contract.address}`)
-                $('#sellValue').text($('#value').val())
             }
 
         })
@@ -106,13 +102,13 @@
 
     function cancelSell() {
 
-        // if the seller clicks abort, then return funds to seller
-        web3.eth.contract(contractAbi).abort('', 
-            {
-                from: web3.eth.accounts[0],
-                to: $("#cancelContractAddress").val()
-            }, function(err, data) {
-                console.log(e, data)
+
+        var contractAddress = $('#cancelContractAddress').val() 
+
+        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
+            console.log(err, data)
+        })
+
 
             }
         )        
@@ -121,17 +117,19 @@
 
     function buy() {
 
-        // if the value sold = value bought, then this locks in the contract
-        web3.eth.contract(contractAbi).confirmPurchase('', 
-            {
-                from: web3.eth.accounts[0],
-                value: $('#buyValue').val() * 1000000000000000000, // convert ETH to wei
-                to: $("#buyContractAddress").val()
-            }, function(err, data) {
-                console.log(e, data)
+        var contractAddress = $('#buyContractAddress').val()
+        var value = $('#buyValue').val()
 
-            }
-        )
+        // if the buyer clicked 'buy', then send msg + funds
+        web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(
+            {
+                from: web3.eth.accounts[0], 
+                data: contractByteCode, 
+                gas: '4700000',
+                value: value * 1000000000000000000
+            }, function(err, data){
+            console.log(err, data)
+        })
 
     }
 
@@ -139,17 +137,17 @@
 
     function itemRecieved() {
 
+        var contractAddress = $('#recievedContractAddress').val()
 
-        if the buyer clicked 'item recieved', then send msg to contract to release funds
-        web3.eth.contract(contractAbi).confirmReceived('', 
+        // if the buyer clicked 'item recieved', then send msg to contract to release funds
+        web3.eth.contract(contractAbi).at(contractAddress).confirmReceived(
             {
-                from: web3.eth.accounts[0],
-                to: $("#recievedContractAddress").val()
-            }, function(err, data) {
-                console.log(e, data)
-                
-            }
-        )
+                from: web3.eth.accounts[0], 
+                data: contractByteCode, 
+                gas: '4700000',
+            }, function(err, data){
+            console.log(err, data)
+        })
 
     }
 
