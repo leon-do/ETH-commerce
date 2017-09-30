@@ -81,21 +81,21 @@
 
     function sell(){
 
+        var value = $('#sellPrice').val()
+
         // if seller click sell, then deploy contract
         web3.eth.contract(contractAbi).new(
         {
             from: web3.eth.accounts[0], 
             data: contractByteCode, 
             gas: '4700000',
-            value: $('#sellPrice').val() * 1000000000000000000
+            value: value * 1000000000000000000
         }, function (e, contract){
             console.log(e, contract);
             
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
-                $('#sellTransactionHash').text(`https://rinkeby.etherscan.io/tx/${contract.transactionHash}`)    
-                $('#sellContractAddress').text(`https://rinkeby.etherscan.io/address/${contract.address}`)
-                $('#sellValue').text($('#value').val())
+                $('#sellContractAddress').text(`Address: ${contract.address}`)
             }
 
         })
@@ -105,9 +105,10 @@
 
     function cancelSell() {
 
-        web3.eth.contract(contractAbi).at($('#recievedContractAddress').val()).abort.confirmReceived({}, function(err, data){
+        var contractAddress = $('#cancelContractAddress').val() 
+
+        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
             console.log(err, data)
-            $('#buyTransactionHash').val(JSON.stringify(data))
         })
 
     }
@@ -115,15 +116,34 @@
 
     function buy() {
 
+        var contractAddress = $('#buyContractAddress').val()
+        var value = $('#buyValue').val()
 
+        // if the buyer clicked 'buy', then send msg + funds
+        web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(
+            {
+                from: web3.eth.accounts[0], 
+                data: contractByteCode, 
+                gas: '4700000',
+                value: value * 1000000000000000000
+            }, function(err, data){
+            console.log(err, data)
+        })
 
     }
 
 
     function itemRecieved() {
 
+        var contractAddress = $('#recievedContractAddress').val()
+
         // if the buyer clicked 'item recieved', then send msg to contract to release funds
-        web3.eth.contract(contractAbi).at($('#cancelContractAddress').val()).abort.sendTransaction({}, function(err, data){
+        web3.eth.contract(contractAbi).at(contractAddress).confirmReceived(
+            {
+                from: web3.eth.accounts[0], 
+                data: contractByteCode, 
+                gas: '4700000',
+            }, function(err, data){
             console.log(err, data)
         })
 
