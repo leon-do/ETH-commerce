@@ -7,6 +7,18 @@ contract Purchase {
     enum State { Created, Locked, Inactive }
     State public state;
 
+    function getSellerAddress() returns (address){
+        return seller;
+    }
+
+    function getBuyerAddress() returns (address){
+        return buyer;
+    }
+
+    function getValue() returns (uint){
+        return value;
+    }
+
     // Ensure that `msg.value` is an even number.
     // Division will truncate if it is an odd number.
     // Check via multiplication that it wasn't an odd number.
