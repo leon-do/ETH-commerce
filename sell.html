@@ -2,16 +2,36 @@
 <html>
 <head>
 	<title></title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">    
+    <style>
+        body {
+            font-family: 'Inconsolata', monospace;
+            background-color: #EFEDE3;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        a {
+            font-size: 99%;
+            text-decoration: none;
+            color: black;
+        }
+        .box {
+            border: 5px solid black;
+            margin: 3%;
+            padding: 3%;
+        }
+    </style>
 </head>
+
 <body>
 
-    Price (ETH): <input type='number' id='sellPrice'>
-    <button onclick="sell()">sell</button>
-    <pre>
-    	...pending screen
-    	contract
-    	value
-    </pre>
+    <div class='box'>
+        Price (ETH): 
+        <br>
+        <input type='number' id='sellPrice'>
+        <br><br><hr><br>
+        <button onclick="sell()">sell</button>
+    </div>
 
 </body>
 

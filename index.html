@@ -5,6 +5,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 	<style>
 		body {
+			height: 100%;
 			font-family: 'Inconsolata', monospace;
 			background-color: #EFEDE3;
 			text-transform: uppercase;
@@ -15,13 +16,12 @@
     		text-decoration: none;
     		color: black;
 		}
-		div {
-			width: 33%;
+		.box {
 			border: 5px solid black;
 			margin: 3%;
 			padding: 3%;
 		}
-		div:hover {
+		.box:hover {
 			background-color: black;
 			color: #EFEDE3;
 		}
@@ -30,15 +30,14 @@
 </head>
 <body>
 
-
 	<a href='/seller'>
-		<div>
+		<div class='box'>
 			I'm a seller.
 		</div>
 	</a>
 
 	<a href='/buyer'>
-		<div>
+		<div class='box'>
 			I'm a buyer.
 		</div>
 	</a>
