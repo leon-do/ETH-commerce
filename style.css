@@ -1,0 +1,25 @@
+body {
+    font-family: 'Inconsolata', monospace;
+    background-color: #EFEDE3;
+    text-align: center;
+}
+a {
+    font-size: 99%;
+    text-decoration: none;
+    color: black;
+}
+.box {
+    text-transform: uppercase;
+    border: 3px solid black;
+    margin: 3%;
+    padding: 3%;
+}
+.click:hover {
+    background-color: black;
+    color: #EFEDE3;
+}
+.message {
+    border: 0.3px solid black;
+    margin: 3%;
+    padding: 3%;
+}

@@ -3,44 +3,36 @@
 <head>
 	<title></title>
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-	<style>
-		body {
-			font-family: 'Inconsolata', monospace;
-			background-color: #EFEDE3;
-			text-transform: uppercase;
-			text-align: center;
-		}
-		a {
-			font-size: 99%;
-    		text-decoration: none;
-    		color: black;
-		}
-		.box {
-			border: 5px solid black;
-			margin: 3%;
-			padding: 3%;
-		}
-		.box:hover {
-			background-color: black;
-			color: #EFEDE3;
-		}
-
-	</style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
 
-	<a href='/sell'>
-		<div class='box'>
+	<a href='sell.html'>
+		<div class='box click'>
 			Sell an item.
 		</div>
 	</a>
 
-	<a href='/cancel'>
-		<div class='box'>
+	<a href='cancel.html'>
+		<div class='box click'>
 			Cancel an item.
 		</div>
 	</a>
+
+	<div class='message'>
+		
+		Sell:
+		<br><br>
+		To sell an item, you must create a contract. The Ethereum you send with the contract with be the value of the item. This will be used as collateral and will be returned to you after the transaction is complete.
+		
+		<br><br><br><hr><br><br>
+		
+		Cancel:
+		<br><br>
+		You can cancel any contract you created that has not been bought.
+
+	</div>
 
 </body>
 </html>

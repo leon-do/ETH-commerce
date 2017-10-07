@@ -3,44 +3,27 @@
 <head>
 	<title></title>
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
-	<style>
-		body {
-			height: 100%;
-			font-family: 'Inconsolata', monospace;
-			background-color: #EFEDE3;
-			text-transform: uppercase;
-			text-align: center;
-		}
-		a {
-			font-size: 99%;
-    		text-decoration: none;
-    		color: black;
-		}
-		.box {
-			border: 5px solid black;
-			margin: 3%;
-			padding: 3%;
-		}
-		.box:hover {
-			background-color: black;
-			color: #EFEDE3;
-		}
-
-	</style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 
-	<a href='/seller'>
-		<div class='box'>
+	<a href='seller.html'>
+		<div class='box click'>
 			I'm a seller.
 		</div>
 	</a>
 
-	<a href='/buyer'>
-		<div class='box'>
+	<a href='buyer.html'>
+		<div class='box click'>
 			I'm a buyer.
 		</div>
 	</a>
+
+	<div class='message'> 
+		Overview:
+		<br><br>
+		Powered by a <a href='contract.html' target='_new'><u>smart contract</u></a>, this website provides a secure and trustless way to trade.
+	</div>
 
 </body>
 </html>
