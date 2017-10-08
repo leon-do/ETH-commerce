@@ -23,6 +23,8 @@
         To sell an item, you must create a contract. The amount of ETH in the contract is the value of the item. Your ETH will be returned after the transaction is complete.
     </div>
 
+    <div class='popup'></div>
+
 </body>
 
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
@@ -43,16 +45,26 @@
         }, function (e, contract){
             console.log(e, contract);
             
+            popup(`creating transaction. please wait...<br> Check the status here: <br> https://rinkeby.etherscan.io/tx/${contract.transactionHash}`)
+
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
-                $('#sellContractAddress').text(`Address: ${contract.address}`)
+                var message = `Please send this message to the seller: <br><br> To purchase the item, send ${value * 1000000000000000000} ETH to Transaction Id: ${contract.address}`
+                popup(message)
             }
 
         })
 
     }
 
+    // this will have a popup message for the user
+    function popup(message){
+        document.getElementsByClassName('popup')[0].innerHTML = message
+    }
+    
+
 	window.addEventListener('load', function() {
+
 	    web3.version.getNetwork((err, netId) => {
 	    switch (netId) {
 	        case "1":
