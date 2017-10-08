@@ -33,8 +33,9 @@
         var contractAddress = $('#recievedContractAddress').val()
 
         // get buyer address
-		web3.eth.contract(contractAbi).at(contractAddress).getBuyerAddress.call({}, function (err, buyerAddress){
-	        // only the seller can cancel
+			web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
+	        // only the seller can confirm
+	        console.log('asfadsf', buyerAddress)
 	        if (buyerAddress === web3.eth.accounts[0]){
 		        // release funds
 		        web3.eth.contract(contractAbi).at(contractAddress).confirmReceived(
@@ -44,13 +45,18 @@
 		                gas: '4700000',
 		            }, function(err, data){
 		            console.log(err, data)
+		            popup(`The transaction will now return your funds. Check at: https://rinkeby.etherscan.io/tx/${contractAddress} <br><br> contact the seller to send the item`)
 		        })
 	        } else {
-        		alert ('Make sure you bought ')
+        		alert ('incorrect address')
 	        }
 		}) 
 
+    }
 
+    // this will have a popup message for the user
+    function popup(message){
+        document.getElementsByClassName('popup')[0].innerHTML = message
     }
 
 	window.addEventListener('load', function() {
