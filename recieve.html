@@ -9,8 +9,11 @@
 <body>
 
     <div class='box'>
-	    I have recieved the item from 
-	    <span id='contractAddress'></span>
+	    I have recieved the item. 
+	    <br>
+	    The contract address is:
+	    <br>
+	    <input id='contractAddress'></input>
 	    <br><br><hr><br>
 	    <button onclick="recieve()">I recieved the item</button>
     </div>
@@ -30,7 +33,7 @@
     // creates a dynamic contract
     var url = parseURL(window.location.href)
     var contractAddress = url.searchObject.addr
-    document.getElementById('contractAddress').innerHTML = contractAddress
+    document.getElementById('contractAddress').value = contractAddress
 
     function recieve() {
 
@@ -38,9 +41,10 @@
 
         // get buyer address
 			web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
+
 	        // only the seller can confirm
-	        console.log('asfadsf', buyerAddress)
 	        if (buyerAddress === web3.eth.accounts[0]){
+		        
 		        // release funds
 		        web3.eth.contract(contractAbi).at(contractAddress).confirmReceived(
 		            {
@@ -55,6 +59,7 @@
 	        } else {
         		alert ('incorrect address')
 	        }
+
 		}) 
 
     }
