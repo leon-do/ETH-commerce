@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src='contract.js'></script>
+</head>
+
+<body>
+
+    <div class='box'>
+        Transaction Number: 
+        <br>
+        <input id='buyTransactionNumber'>
+        <br><br><hr><br>
+        Amount: 
+        <br>
+        <input type='number' id='buyValue'>
+        <br><br><hr><br>
+        <button onclick="buy()">buy</button>
+        <br>
+    </div>
+
+    <div class='message'> 
+        Buy:
+        <br><br>
+        When you buy, the contract will hold your amount and the sellers amount until you recieve the item. When you recieve the item you must
+        <a href='buyer.html' target='_new'><u>confirm</u></a>.
+        This tells the contract to release the funds and complete the transaction.
+    </div>
+
+    <div class='popup'></div>
+
+</body>
+
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript">
+
+
+    function buy() {
+
+        var contractAddress = $('#buyTransactionNumber').val()
+        var buyValue = $('#buyValue').val()
+
+        // get value of contract
+        web3.eth.contract(contractAbi).at(contractAddress).getValue.call({}, function (err, contractValue){
+           
+           var contractValue = new BigNumber(contractValue).toNumber()
+
+            // if buy value == contract value
+            if (buyValue == contractValue){
+
+                // buy
+                web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(
+                    {
+                        from: web3.eth.accounts[0], 
+                        data: contractByteCode, 
+                        gas: '4700000',
+                        value: buyValue * 1000000000000000000
+                    }, function(err, data){
+                    console.log(err, data)
+                    if (data){
+                        popup(`your item has been purchased <br><br> https://rinkeby.etherscan.io/tx/${data} <br><br> contact the seller to send the item`)
+                    }                })
+
+            } else {
+                alert ('amount does not match')
+            }
+        })
+        
+    }
+
+    // this will have a popup message for the user
+    function popup(message){
+        document.getElementsByClassName('popup')[0].innerHTML = message
+    }
+
+	window.addEventListener('load', function() {
+	    web3.version.getNetwork((err, netId) => {
+	    switch (netId) {
+	        case "1":
+	            console.log('This is mainnet')
+	            break
+	        case "2":
+	            console.log('This is the deprecated Morden test network.')
+	            break
+	        case "3":
+	            console.log('This is the ropsten test network.')
+	            break
+	        case "4":
+	            console.log('This is the rinkeby test network.')
+	            break        
+	        default:
+	            alert('Please connect to Metamask or Mist then try again')
+	        }
+	    })
+	})
+
+</script>
+
+</html>

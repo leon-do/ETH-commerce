@@ -32,8 +32,6 @@
 <script type="text/javascript">
 
     function sell(){
-                        var message = `Please send this link to the seller: <br><br>  file:///Users/leondo/Desktop/ETH-commerce/buy.html?val=${value * 1000000000000000000}&addr=${contract.address}`
-                popup(message)
 
         var value = $('#sellPrice').val()
 
@@ -51,7 +49,7 @@
 
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
-                var message = `Please send this link to the seller: <br><br>  https://leon-do.github.io/ETH-commerce/buy.html?val=${value * 1000000000000000000}&addr=${contract.address}`
+                var message = `Please send this message to the seller: <br><br> To purchase the item, send ${value * 1000000000000000000} ETH to Transaction Id: ${contract.address}`
                 popup(message)
             }
 
@@ -85,8 +83,6 @@
 	            alert('Please connect to Metamask or Mist then try again')
 	        }
 	    })
-
-
 	})
 
 </script>

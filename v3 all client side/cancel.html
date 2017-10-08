@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src='contract.js'></script>    
+</head>
+
+<body>
+
+    <div class='box'>
+	    Transaction Number: 
+	    <br>
+	    <input id='cancelTransactionNumber'>
+        <br><br><hr><br>
+	    <button onclick="cancelSell()">cancel item</button>
+    </div>
+
+    <div class='message'> 
+        Cancel:
+        <br><br>
+        Canceling a contract will disable it forever!
+    </div>
+
+    <div class='popup'></div>
+
+</body>
+
+
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script type="text/javascript">
+
+	var isAddress = web3.isAddress("0x8888f1f195afa192cfee860698584c030f4c9db1");
+
+	function cancelSell() {
+
+        var contractAddress = $('#cancelTransactionNumber').val() 
+
+        // get buyer address
+        web3.eth.contract(contractAbi).at(contractAddress).getBuyerAddress.call({}, function (err, buyerAddress){
+        	
+        	// if the there is no buyer, then seller can cancel
+	        if (buyerAddress === null || buyerAddress === '0x0000000000000000000000000000000000000000'){
+	        	console.log('seller can cancel')
+	        } else {
+	        	console.log(`the contract cannot be canceled. a buyer with address has already purchased this item`)
+	        	return
+	        }
+
+	        // get seller address
+			web3.eth.contract(contractAbi).at(contractAddress).getSellerAddress.call({}, function (err, sellerAddress){
+		        
+		        // only the seller can cancel
+		        if (sellerAddress === web3.eth.accounts[0]){
+			        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
+		            	console.log(err, data)
+		            	popup('your transaction has been canceled. you will be refunded shortly')
+		        	})	
+		        } else {
+	        		alert ('incorrect address')
+		        }
+			
+			})  
+
+		})
+
+    }
+
+    // this will have a popup message for the user
+    function popup(message){
+        document.getElementsByClassName('popup')[0].innerHTML = message
+    }
+
+	window.addEventListener('load', function() {
+	    web3.version.getNetwork((err, netId) => {
+	    switch (netId) {
+	        case "1":
+	            console.log('This is mainnet')
+	            break
+	        case "2":
+	            console.log('This is the deprecated Morden test network.')
+	            break
+	        case "3":
+	            console.log('This is the ropsten test network.')
+	            break
+	        case "4":
+	            console.log('This is the rinkeby test network.')
+	            break        
+	        default:
+	            alert('Please connect to Metamask or Mist then try again')
+	        }
+	    })
+	})
+
+</script>
+
+</html>
