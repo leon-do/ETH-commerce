@@ -23,7 +23,7 @@
         Buy:
         <br><br>
         When you buy, the contract will hold your amount and the sellers amount until you recieve the item. When you recieve the item you must
-        <a href='buyer.html' target='_new'><u>confirm</u></a>.
+        <a href='recieve.html' target='_new'><u>confirm</u></a>.
         This tells the contract to release the funds and complete the transaction.
     </div>
 
@@ -62,7 +62,8 @@
                     }, function(err, data){
                     console.log(err, data)
                     if (data){
-                        popup(`your item has been purchased. <br><br> Use this link when you recieved your item: <br><br>  https://leon-do.github.io/ETH-commerce/recieve.html/addr=${contractAddress}`)
+                        var message = `your item has been purchased. <br><br> Use this link when you recieved your item: <br><br>  https://leon-do.github.io/ETH-commerce/recieve.html/addr=${contractAddress}`
+                        document.getElementsByClassName('popup')[0].innerHTML = message                        
                     }                
                 })
 

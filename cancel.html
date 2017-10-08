@@ -56,7 +56,8 @@
 		        if (sellerAddress === web3.eth.accounts[0]){
 			        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
 		            	console.log(err, data)
-		            	popup('your transaction has been canceled. you will be refunded shortly')
+		            	var message = 'your transaction has been canceled. you will be refunded shortly'
+		        		document.getElementsByClassName('popup')[0].innerHTML = message
 		        	})	
 		        } else {
 	        		alert ('incorrect address')

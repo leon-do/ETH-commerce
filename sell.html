@@ -45,12 +45,13 @@
         }, function (e, contract){
             console.log(e, contract);
             
-            popup(`creating transaction. please wait...<br><br> Check the status here: <br> https://rinkeby.etherscan.io/tx/${contract.transactionHash}`)
+            var message = `creating transaction. please wait...(don't close this page)<br><br> Check the status here: <br> https://rinkeby.etherscan.io/tx/${contract.transactionHash}`
+            document.getElementsByClassName('popup')[0].innerHTML = message
 
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
-                var message = `Please send this link to the buyer: <br><br>  https://leon-do.github.io/ETH-commerce/buy.html?val=${value * 1000000000000000000}&addr=${contract.address}`
-                popup(message)
+                message = `Please send this link to the buyer: <br><br>  https://leon-do.github.io/ETH-commerce/buy.html?val=${value * 1000000000000000000}&addr=${contract.address}`
+                document.getElementsByClassName('popup')[0].innerHTML = message
             }
 
         })

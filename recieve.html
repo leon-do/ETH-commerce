@@ -49,7 +49,8 @@
 		                gas: '4700000',
 		            }, function(err, data){
 		            console.log(err, data)
-		            popup(`The transaction will now return your funds. Check at: https://rinkeby.etherscan.io/tx/${contractAddress} <br><br> contact the seller to send the item`)
+		           	var message = `The transaction will now return your funds. Check at: https://rinkeby.etherscan.io/tx/${contractAddress} <br><br> contact the seller to send the item`
+		            document.getElementsByClassName('popup')[0].innerHTML = message
 		        })
 	        } else {
         		alert ('incorrect address')
@@ -58,10 +59,6 @@
 
     }
 
-    // this will have a popup message for the user
-    function popup(message){
-        document.getElementsByClassName('popup')[0].innerHTML = message
-    }
 
 	window.addEventListener('load', function() {
 	    web3.version.getNetwork((err, netId) => {
