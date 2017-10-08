@@ -33,11 +33,11 @@
     // creates a dynamic contract
     var url = parseURL(window.location.href)
     var contractAddress = url.searchObject.addr
-    document.getElementById('contractAddress').value = contractAddress
+    if (contractAddress !== undefined){
+    	document.getElementById('contractAddress').value = contractAddress
+    }
 
     function recieve() {
-
-        var contractAddress = $('#recievedContractAddress').val()
 
         // get buyer address
 			web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
