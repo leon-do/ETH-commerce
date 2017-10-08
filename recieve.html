@@ -41,6 +41,7 @@
 
         // get buyer address
 			web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
+console.log('buyerAddress', buyerAddress)
 
 	        // only the seller can confirm
 	        if (buyerAddress === web3.eth.accounts[0]){
