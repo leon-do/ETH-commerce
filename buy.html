@@ -10,16 +10,13 @@
 <body>
 
     <div class='box'>
-        Transaction Number: 
-        <br>
-        <input id='buyTransactionNumber'>
+        I agree to buy the item
+        <span id='buyContractAddress'></span>
+        for
+        <span id='buyValue'></span>
+        ETH.
         <br><br><hr><br>
-        Amount: 
-        <br>
-        <input type='number' id='buyValue'>
-        <br><br><hr><br>
-        <button onclick="buy()">buy</button>
-        <br>
+        <button onclick="buy()"> buy </button>
     </div>
 
     <div class='message'> 
@@ -38,11 +35,14 @@
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script type="text/javascript">
 
+    // creates a dynamic contract
+    var url = parseURL(window.location.href)
+    var contractAddress = url.searchObject.addr
+    var buyValue = url.searchObject.val
+    document.getElementById('buyContractAddress').innerHTML = contractAddress
+    document.getElementById('buyValue').innerHTML = buyValue
 
     function buy() {
-
-        var contractAddress = $('#buyTransactionNumber').val()
-        var buyValue = $('#buyValue').val()
 
         // get value of contract
         web3.eth.contract(contractAbi).at(contractAddress).getValue.call({}, function (err, contractValue){
@@ -62,8 +62,9 @@
                     }, function(err, data){
                     console.log(err, data)
                     if (data){
-                        popup(`your item has been purchased <br><br> https://rinkeby.etherscan.io/tx/${data} <br><br> contact the seller to send the item`)
-                    }                })
+                        popup(`your item has been purchased. <br><br> Use this link when you recieved your item: <br><br>  https://leon-do.github.io/ETH-commerce/recieve.html/addr=${contractAddress}`)
+                    }                
+                })
 
             } else {
                 alert ('amount does not match')
@@ -72,10 +73,6 @@
         
     }
 
-    // this will have a popup message for the user
-    function popup(message){
-        document.getElementsByClassName('popup')[0].innerHTML = message
-    }
 
 	window.addEventListener('load', function() {
 	    web3.version.getNetwork((err, netId) => {
@@ -97,6 +94,7 @@
 	        }
 	    })
 	})
+
 
 </script>
 
