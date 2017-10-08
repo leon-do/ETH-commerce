@@ -57,7 +57,7 @@
         web3.eth.contract(contractAbi).at(contractAddress).getValue.call({}, function (err, contractValue){
            
            var contractValue = new BigNumber(contractValue).toNumber()
-
+console.log('asdfasf', contractValue)
             // if buy value == contract value
             if (buyValue == contractValue){
 

@@ -50,7 +50,7 @@
         var contractAddress = $('#cancelTransactionNumber').val() 
 
         // get buyer address
-        web3.eth.contract(contractAbi).at(contractAddress).getBuyerAddress.call({}, function (err, buyerAddress){
+        web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
         	
         	// if the there is no buyer, then seller can cancel
 	        if (buyerAddress === null || buyerAddress === '0x0000000000000000000000000000000000000000'){
@@ -61,7 +61,7 @@
 	        }
 
 	        // get seller address
-			web3.eth.contract(contractAbi).at(contractAddress).getSellerAddress.call({}, function (err, sellerAddress){
+			web3.eth.contract(contractAbi).at(contractAddress).seller.call({}, function (err, sellerAddress){
 		        console.log('dasdf seller addresss ', sellerAddress)
 		        // only the seller can cancel
 		        if (sellerAddress === web3.eth.accounts[0]){
