@@ -37,16 +37,18 @@
 <script type="text/javascript">
 
 
-
-    function async buy() {
+    function buy() {
 
         var contractAddress = $('#buyTransactionNumber').val()
         var buyValue = $('#buyValue').val()
 
         // get value of contract
         web3.eth.contract(contractAbi).at(contractAddress).getValue.call({}, function (err, contractValue){
+           
+           var contractValue = new BigNumber(contractValue).toNumber()
+
             // if buy value == contract value
-            if (buyValue = contractValue){
+            if (buyValue == contractValue){
 
                 // buy
                 web3.eth.contract(contractAbi).at(contractAddress).confirmbuy(
@@ -57,15 +59,24 @@
                         value: buyValue * 1000000000000000000
                     }, function(err, data){
                     console.log(err, data)
+                    popup(`your item has been purchased <br><br> view here: https://rinkeby.etherscan.io/tx/${data} <br><br> contact the seller to send the item`)
                 })
 
             } else {
                 alert ('value does not match')
             }
         })
+        
+    }
 
+    // this will have a popup message for the user
+    function popup(message){
+        document.getElementsByClassName('popup')[0].innerHTML = message
+    }
 
-
+    // this will have a popup message for the user
+    function popup(message){
+        document.getElementsByClassName('popup')[0].innerHTML = message
     }
 
 
