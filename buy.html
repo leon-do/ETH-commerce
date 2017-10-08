@@ -46,7 +46,7 @@
     function buy() {
 
         // get value of contract
-        web3.eth.contract(contractAbi).at(contractAddress).getValue.call({}, function (err, contractValue){
+        web3.eth.contract(contractAbi).at(contractAddress).value.call({}, function (err, contractValue){
            
            var contractValue = new BigNumber(contractValue).toNumber()
 
