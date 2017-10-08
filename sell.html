@@ -45,7 +45,7 @@
         }, function (e, contract){
             console.log(e, contract);
             
-            popup(`creating transaction. please wait...<br> Check the status here: <br> https://rinkeby.etherscan.io/tx/${contract.transactionHash}`)
+            popup(`creating transaction. please wait...<br><br> Check the status here: <br> https://rinkeby.etherscan.io/tx/${contract.transactionHash}`)
 
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
