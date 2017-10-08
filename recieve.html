@@ -39,9 +39,11 @@
 
     function recieve() {
 
+    	contractAddress = document.getElementById('contractAddress').value
+
+
         // get buyer address
-			web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
-console.log('buyerAddress', buyerAddress)
+		web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
 
 	        // only the seller can confirm
 	        if (buyerAddress === web3.eth.accounts[0]){
@@ -58,7 +60,7 @@ console.log('buyerAddress', buyerAddress)
 		            document.getElementsByClassName('popup')[0].innerHTML = message
 		        })
 	        } else {
-        		alert ('incorrect address')
+        		alert ('make sure the contract address is correct')
 	        }
 
 		}) 
