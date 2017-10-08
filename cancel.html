@@ -4,7 +4,6 @@
 	<title></title>
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="text/javascript" src='contract.js'></script>    
 </head>
 
 <body>
@@ -27,12 +26,11 @@
 
 </body>
 
-
+<script type="text/javascript" src='contract.js'></script>    
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script type="text/javascript">
 
-	var isAddress = web3.isAddress("0x8888f1f195afa192cfee860698584c030f4c9db1");
 
 	function cancelSell() {
 
@@ -50,7 +48,7 @@
 	        }
 
 	        // get seller address
-			web3.eth.contract(contractAbi).at(contractAddress).getSellerAddress.call({}, function (err, sellerAddress){
+			web3.eth.contract(contractAbi).at(contractAddress).seller.call({}, function (err, sellerAddress){
 		        
 		        // only the seller can cancel
 		        if (sellerAddress === web3.eth.accounts[0]){
