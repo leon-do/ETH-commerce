@@ -7,7 +7,7 @@
     Price (ETH): <input type='number' id='sellPrice'>
     <button onclick="sell()">sell</button>
     <br>
-    Contract Address: <input id='cancelContractAddress'>
+    Contract Address: <input id='cancelTransactionNumber'>
     <button onclick="cancelSell()">cancel sell</button>
     <div id='sellTransactionHash'></div>
     <div id='sellContractAddress'></div>
@@ -15,7 +15,7 @@
     <br>
 
     <br>
-    Contract Address: <input id='buyContractAddress'>
+    Contract Address: <input id='buyTransactionNumber'>
     <br>
     Amount: <input id='buyValue'>
     <button onclick="buy()">buy</button>
@@ -131,7 +131,7 @@
 
     function cancelSell() {
 
-        var contractAddress = $('#cancelContractAddress').val() 
+        var contractAddress = $('#cancelTransactionNumber').val() 
 
         web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
             console.log(err, data)
@@ -142,7 +142,7 @@
 
     function buy() {
 
-        var contractAddress = $('#buyContractAddress').val()
+        var contractAddress = $('#buyTransactionNumber').val()
         var value = $('#buyValue').val()
 
         // if the buyer clicked 'buy', then send msg + funds

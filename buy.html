@@ -10,9 +10,9 @@
 <body>
 
     <div class='box'>
-        Contract Address: 
+        Transaction Number: 
         <br>
-        <input id='buyContractAddress'>
+        <input id='buyTransactionNumber'>
         <br><br><hr><br>
         Amount: 
         <br>
@@ -40,7 +40,7 @@
 
     function async buy() {
 
-        var contractAddress = $('#buyContractAddress').val()
+        var contractAddress = $('#buyTransactionNumber').val()
         var buyValue = $('#buyValue').val()
 
         // get value of contract

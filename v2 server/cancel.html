@@ -28,7 +28,7 @@
     <div class='box'>
 	    Contract Address: 
 	    <br>
-	    <input id='cancelContractAddress'>
+	    <input id='cancelTransactionNumber'>
         <br><br><hr><br>
 	    <button onclick="cancelSell()">cancel item</button>
     </div>
@@ -45,7 +45,7 @@
 
 	function cancelSell() {
 
-        var contractAddress = $('#cancelContractAddress').val() 
+        var contractAddress = $('#cancelTransactionNumber').val() 
 
         // get seller address
 		web3.eth.contract(contractAbi).at(contractAddress).getSellerAddress.call({}, function (err, sellerAddress){

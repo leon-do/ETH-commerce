@@ -3,7 +3,7 @@
 
         web3.eth.sendTransaction({
             value: $('#buyValue').val() * 1000000000000000000,
-            to: $("#buyContractAddress").val()
+            to: $("#buyTransactionNumber").val()
         }, function(err, transactionHash) {
           if (!err)
             $('#buyTransactionHash').text(transactionHash)
