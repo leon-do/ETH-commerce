@@ -47,17 +47,32 @@
 
         var contractAddress = $('#cancelTransactionNumber').val() 
 
-        // get seller address
-		web3.eth.contract(contractAbi).at(contractAddress).getSellerAddress.call({}, function (err, sellerAddress){
-	        // only the seller can cancel
-	        if (sellerAddress === web3.eth.accounts[0]){
-		        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
-	            	console.log(err, data)
-	        	})	
+        // get buyer address
+        web3.eth.contract(contractAbi).at(contractAddress).getBuyerAddress.call({}, function (err, buyerAddress){
+
+        	// if the there is no buyer, then seller can cancel
+	        if (buyerAddress === null || buyerAddress === '0x0000000000000000000000000000000000000000'){
+	        	console.log('seller can cancel')
 	        } else {
-        		alert ('incorrect address')
+	        	console.log(`the contract cannot be canceled. a buyer with address has already purchased this item`)
+	        	return
 	        }
-		})  
+
+	        // get seller address
+			web3.eth.contract(contractAbi).at(contractAddress).getSellerAddress.call({}, function (err, sellerAddress){
+		        
+		        // only the seller can cancel
+		        if (sellerAddress === web3.eth.accounts[0]){
+			        web3.eth.contract(contractAbi).at(contractAddress).abort({}, function(err, data){
+		            	console.log(err, data)
+		        	})	
+		        } else {
+	        		alert ('incorrect address')
+		        }
+			
+			})  
+
+		})
 
     }
 
