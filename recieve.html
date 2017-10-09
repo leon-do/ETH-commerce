@@ -14,7 +14,7 @@
 	    <br>
 	    <input id='contractAddress'></input>
 	    <br><br><hr><br>
-	    <button onclick="recieve()">I recieved the item</button>
+	    <button disabled onclick="recieve()" id='btn'>I recieved the item</button>
     </div>
 
     <div class='message'> 
@@ -42,7 +42,6 @@
     function recieve() {
 
     	contractAddress = document.getElementById('contractAddress').value
-
 
         // get buyer address
 		web3.eth.contract(contractAbi).at(contractAddress).buyer.call({}, function (err, buyerAddress){
@@ -77,6 +76,9 @@
             alert('Please connect to Metamask or Mist then try again')
             return
         }
+
+        // enable button
+        document.getElementById('btn').disabled = false        
         
 	    web3.version.getNetwork((err, netId) => {
 	    switch (netId) {
@@ -96,7 +98,7 @@
 	            alert('Please connect to Metamask or Mist then try again')
 	        }
 	    })
-	    
+
 	})
 
 </script>

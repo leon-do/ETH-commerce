@@ -15,7 +15,7 @@
         <span id='buyValue'></span>
         ETH.
         <br><br><hr><br>
-        <button onclick="buy()"> buy </button>
+        <button disabled onclick="buy()" id="btn"> buy </button>
     </div>
 
     <div class='message'> 
@@ -96,7 +96,9 @@
             alert('Please connect to Metamask or Mist then try again')
             return
         }
-        
+
+        document.getElementById('btn').disabled = false
+
 	    web3.version.getNetwork((err, netId) => {
 	    switch (netId) {
 	        case "1":

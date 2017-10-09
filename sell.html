@@ -13,7 +13,7 @@
         <br>
         <input type='number' id='sellPrice'>
         <br><br><hr><br>
-        <button onclick="sell()">sell</button>
+        <button disabled onclick="sell()" id='btn'>sell</button>
     </div>
 
     <div class='message'> 
@@ -71,6 +71,9 @@
             alert('Please connect to Metamask or Mist then try again')
             return
         }
+
+        // enable button
+        document.getElementById('btn').disabled = false
         
         web3.version.getNetwork((err, netId) => {
         switch (netId) {
