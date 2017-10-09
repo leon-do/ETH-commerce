@@ -90,6 +90,9 @@
 
 
 	window.addEventListener('load', function() {
+
+        var web3 = new Web3()
+
 	    web3.version.getNetwork((err, netId) => {
 	    switch (netId) {
 	        case "1":
