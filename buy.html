@@ -37,6 +37,7 @@
 <script type="text/javascript">
 
     // creates a dynamic contract
+    // https://leon-do.github.io/ETH-commerce/buy.html?val=0.4&addr=0xbe6714e8efea13ecf2a5b9bdbabe5fd67a98061b
     var url = parseURL(window.location.href)
     var contractAddress = url.searchObject.addr
     var buyValue = url.searchObject.val
@@ -51,7 +52,8 @@
            var contractValue = new BigNumber(contractValue).toNumber()
 
             // if buy value == contract value
-            if (buyValue == contractValue){
+            // look at the contract to see why it's divide by 2
+            if (buyValue * 1000000000000000000 / 2 == contractValue){
 
                 // buy
                 web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(

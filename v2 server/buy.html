@@ -46,16 +46,26 @@
     document.getElementById('buyContractAddress').innerHTML = contractAddress
     document.getElementById('buyValue').innerHTML = buyValue
 
+    // creates a dynamic contract
+    // https://leon-do.github.io/ETH-commerce/buy.html?val=0.4&addr=0xbe6714e8efea13ecf2a5b9bdbabe5fd67a98061b
+    var url = parseURL(window.location.href)
+    var contractAddress = url.searchObject.addr
+    var buyValue = url.searchObject.val
+    document.getElementById('buyContractAddress').innerHTML = contractAddress
+    document.getElementById('buyValue').innerHTML = buyValue
+
     function buy() {
 
-
         // get value of contract
-        web3.eth.contract(contractAbi).at('0xf42b16b4feab2577c64503fe11feb43de8787ef6').value.call({}, function (err, contractValue){
+        web3.eth.contract(contractAbi).at(contractAddress).value.call({}, function (err, contractValue){
            
            var contractValue = new BigNumber(contractValue).toNumber()
 
+console.log('contractValue', contractValue)
+
             // if buy value == contract value
-            if (buyValue == contractValue){
+            // look at the contract to see why it's divide by 2
+            if (buyValue * 1000000000000000000 / 2 == contractValue){
 
                 // buy
                 web3.eth.contract(contractAbi).at(contractAddress).confirmPurchase(
@@ -67,7 +77,18 @@
                     }, function(err, data){
                     console.log(err, data)
                     if (data){
-                        popup(`your item has been purchased <br><br> view here: https://rinkeby.etherscan.io/tx/${data} <br><br> contact the seller to send the item`)
+                        var message = `
+                        your item has been purchased 
+                        <br><br> 
+                        rhttps://rinkeby.etherscan.io/tx/${data} 
+                        <br><br> 
+                        contact the seller to send the item
+                        <br><br>
+                        once you recieve your item, complete the transaction here:
+                        <br><br>
+                        https://leon-do.github.io/ETH-commerce/buy.html?addr=${contractAddress}
+                        `
+                        document.getElementsByClassName('popup')[0].innerHTML = message
                     }
                 })
 

@@ -58,19 +58,13 @@
 
             if (typeof contract.address !== 'undefined') {
                 // display info on screen
-                message = `Please send this link to the buyer: <br><br>  https://leon-do.github.io/ETH-commerce/buy.html?val=${value * 1000000000000000000}&addr=${contract.address}`
+                message = `Please send this link to the buyer: <br><br>  https://leon-do.github.io/ETH-commerce/buy.html?val=${value}&addr=${contract.address}`
                 document.getElementsByClassName('popup')[0].innerHTML = message
             }
 
         })
 
     }
-
-    // this will have a popup message for the user
-    function popup(message){
-        document.getElementsByClassName('popup')[0].innerHTML = message
-    }
-    
 
 	window.addEventListener('load', function() {
 
