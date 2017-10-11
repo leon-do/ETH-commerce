@@ -33,7 +33,6 @@
 <script type="text/javascript" src='contract.js'></script>
 <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bignumber.js/4.1.0/bignumber.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 <script type="text/javascript">
 
     // creates a dynamic contract
@@ -49,7 +48,7 @@
         // get value of contract
         web3.eth.contract(contractAbi).at(contractAddress).value.call({}, function (err, contractValue){
            
-           var contractValue = new BigNumber(contractValue).toNumber()
+            var contractValue = new BigNumber(contractValue).toNumber()
 
             // if buy value == contract value
             // look at the contract to see why it's divide by 2
@@ -62,13 +61,13 @@
                         data: contractByteCode, 
                         gas: '4700000',
                         value: buyValue * 1000000000000000000
-                    }, function(err, data){
-                    console.log(err, data)
-                    if (data){
+                    }, function(err, transactionAddress){
+
+                    if (transactionAddress){
                         var message = `
                         your item has been purchased 
                         <br><br> 
-                        https://rinkeby.etherscan.io/tx/${data} 
+                        https://rinkeby.etherscan.io/tx/${transactionAddress} 
                         <br><br> 
                         contact the seller to send the item
                         <br><br>
@@ -81,7 +80,7 @@
                 })
 
             } else {
-                alert ('value does not match')
+                alert('value does not match')
             }
         })
         
@@ -90,33 +89,8 @@
 
 
 	window.addEventListener('load', function() {
-
-        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-        if (typeof web3 === 'undefined') {
-            alert('Please connect to Metamask or Mist then try again')
-            return
-        }
-
-        document.getElementById('btn').disabled = false
-
-	    web3.version.getNetwork((err, netId) => {
-	    switch (netId) {
-	        case "1":
-	            console.log('This is mainnet')
-	            break
-	        case "2":
-	            console.log('This is the deprecated Morden test network.')
-	            break
-	        case "3":
-	            console.log('This is the ropsten test network.')
-	            break
-	        case "4":
-	            console.log('This is the rinkeby test network.')
-	            break        
-	        default:
-	            alert('Please connect to Metamask or Mist then try again')
-	        }
-	    })
+        // this function is in contract.js
+        loadWeb3()
 	})
 
 
