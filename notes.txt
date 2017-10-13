@@ -1,0 +1,49 @@
+====RAW=====
+Seller 16.483
+Buyer 9.514
+
+amount 0.42
+
+locked in balance
+
+Seller 16.052
+Buyer 9.093
+
+complete transaction
+
+Seller 16.682
+Buyer 9.303
+
+Seller made 0.199)
+Buyer  lost -0.211
+
+
+
+
+
+
+
+====SIMPLIFIED=====
+seller 10
+buyer 10
+
+lock contract at 1
+
+seller 9
+buyer 9
+
+unlocked transaction
+
+seller 10.5
+buyer 9.5
+
+
+
+
+====CONCLUSION=====
+value of the item = amount / 2
+which does not make sense...
+or does it?...
+nope
+naw
+no
