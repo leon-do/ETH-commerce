@@ -14,8 +14,8 @@ complete transaction
 Seller 16.682
 Buyer 9.303
 
-Seller made 0.199)
-Buyer  lost -0.211
+Seller made 0.199
+Buyer  lost 0.211
 
 
 
@@ -25,25 +25,28 @@ Buyer  lost -0.211
 
 ====SIMPLIFIED=====
 seller 10
-buyer 10
+buyer  10
 
 lock contract at 1
 
 seller 9
-buyer 9
+buyer  9
 
-unlocked transaction
+unlocked contract
 
 seller 10.5
-buyer 9.5
+buyer   9.5
+
 
 
 
 
 ====CONCLUSION=====
-value of the item = amount / 2
+value of the item = half the amount you put in
 which does not make sense...
 or does it?...
 nope
 naw
 no
+keep the buyer logic the same
+change the seller logic
