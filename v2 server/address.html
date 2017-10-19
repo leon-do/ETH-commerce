@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Inconsolata', monospace;
+			background-color: #EFEDE3;
+			text-transform: uppercase;
+			text-align: center;
+		}
+		a {
+			font-size: 99%;
+			text-decoration: none;
+			color: black;
+		}
+		.box {
+			border: 3px solid black;
+			margin: 3%;
+			padding: 3%;
+		}
+	</style>
+</head>
+<body>
+
+<div class='box'>
+	Contract Address:
+	<br>
+	<input id='recievedContractAddress'>
+	<br><br><hr><br>
+	<button onclick="recieve()">I recieved the item</button>
+</div>
+
+</body>
+
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+
+    async function cancel() {
+        var address = web3.eth.accounts[0]
+        var contracts = await getContractList(address)
+        for (var index in contracts){
+            var contractData = await getContractData(contracts[index])
+            if (contractData.length === 1 && Number(contractData[0].value) !== 0){
+                console.log('this can be canceled', contracts[index])
+            }
+        }
+    }
+
+    function getContractData(address){
+        return new Promise (function(resolve){
+            $.get(`http://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+                var data = response.result
+                resolve(data)
+            })
+        })
+    }
+
+    function getContractList(address){
+        return new Promise (function(resolve){
+            $.get(`http://rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999`, function (response) {
+                var data = response.result
+                var contracts = []
+                for (var index in data){
+                    var contractAddress = data[index].contractAddress
+                    if (contractAddress !== ''){
+                        contracts.push(contractAddress)
+                    }
+                }
+                resolve(contracts)
+            })
+        })
+    }
+
+    window.addEventListener('load', function() {
+        web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+            case "1":
+                console.log('This is mainnet')
+                cancel()
+                break
+            case "2":
+                console.log('This is the deprecated Morden test network.')
+                cancel()
+                break
+            case "3":
+                console.log('This is the ropsten test network.')
+                cancel()
+                break
+            case "4":
+                console.log('This is the rinkeby test network.')
+                cancel()
+                break
+            default:
+                alert('Please connect to Metamask or Mist then try again')
+            }
+        })
+    })
+
+</script>
+
+</html>

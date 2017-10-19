@@ -15,6 +15,10 @@ app.get('/cancel', function(req, res) {
     res.sendFile(path.join(__dirname + '/cancel.html'));
 });
 
+app.get('/address', function(req, res) {
+    res.sendFile(path.join(__dirname + '/address.html'));
+});
+
 app.get('/seller', function(req, res) {
     res.sendFile(path.join(__dirname + '/seller.html'));
 });
